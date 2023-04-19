@@ -134,3 +134,12 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{ natgw1_out.nat_gateway_id }}"
       register: privRT1_out
+
+    - name: NAT Gateway3 Setup and allocate new EIP if NATGW does not exist yet in the subnet
+      ec2_vpc_nat_gateway:
+        subnet_id: "{{ pubsub3_out.subnet.id }}"
+        region: "{{region}}"
+        state:  "{{state}}"
+        wait: yes
+        if_exist_do_not_create: yes
+      register: natgw3_out
